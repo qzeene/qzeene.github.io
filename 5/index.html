@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>5 Месяцев</title>
+	<style>
+		html,
+		body {
+			height: 100vh
+		}
+
+		body {
+			font-size: 16px;
+			font-family: Verdana, sans-serif;
+			line-height: 1.6;
+			padding: 0;
+			margin: 0;
+		}
+
+		.text {
+			max-width: 55%;
+			margin: auto;
+		}
+
+		.text h1 {
+			font-size: 3em;
+		}
+
+		.bg_heart {
+			position: relative;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			overflow: hidden
+		}
+
+		.heart {
+			position: absolute;
+			top: -50%;
+			-webkit-transform: rotate(-45deg);
+			-moz-transform: rotate(-45deg);
+			-m-transform: rotate(-45deg);
+			transform: rotate(-45deg)
+		}
+
+		.heart:before {
+			position: absolute;
+			top: -50%;
+			left: 0;
+			display: block;
+			content: "";
+			width: 100%;
+			height: 100%;
+			background: inherit;
+			border-radius: 100%;
+		}
+
+		.heart:after {
+			position: absolute;
+			top: 0;
+			right: -50%;
+			display: block;
+			content: "";
+			width: 100%;
+			height: 100%;
+			background: inherit;
+			border-radius: 100%;
+		}
+
+		@-webkit-keyframes love {
+			0% {
+				top: 110%
+			}
+		}
+
+		@-moz-keyframes love {
+			0% {
+				top: 110%
+			}
+		}
+
+		@-ms-keyframes love {
+			0% {
+				top: 110%
+			}
+		}
+
+		@keyframes love {
+			0% {
+				top: 110%
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="bg_heart">
+		<div class="text">
+			<h1>Нам 5 месяцев, Любимая</h1>
+			<p>На эту годовщину в качестве подарка презентую наш <a href="https://vk.com/video82551608_456239605">влог</a>, который я решил скромненько назвать «семейный блог».</p>
+			<p>В файлике из символов твоя фотка, кста. Угадаешь какая – с меня желание (любое). Попыток угадать только две, а времени
+				– до 22.04.2019.</p>
+			<p>Не забудь про этот файлик к следующей годовщине.</p>
+			<p>Люблю, целую. Твой Е.</p>
+		</div>
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script>
+		var love = setInterval(function () {
+			var r_num = Math.floor(Math.random() * 40) + 1;
+			var r_size = Math.floor(Math.random() * 65) + 10;
+			var r_left = Math.floor(Math.random() * 100) + 1;
+			var r_bg = Math.floor(Math.random() * 25) + 100;
+			var r_time = Math.floor(Math.random() * 5) + 5;
+
+			$('.bg_heart').append("<div class='heart' style='width:" + r_size + "px;height:" + r_size + "px;left:" +
+				r_left + "%;background:rgba(255," + (r_bg - 25) + "," + r_bg + ",1);-webkit-animation:love " + r_time +
+				"s ease;-moz-animation:love " + r_time + "s ease;-ms-animation:love " + r_time + "s ease;animation:love " +
+				r_time + "s ease'></div>");
+
+			$('.bg_heart').append("<div class='heart' style='width:" + (r_size - 10) + "px;height:" + (r_size - 10) +
+				"px;left:" + (r_left + r_num) + "%;background:rgba(255," + (r_bg - 25) + "," + (r_bg + 25) +
+				",1);-webkit-animation:love " + (r_time + 5) + "s ease;-moz-animation:love " + (r_time + 5) +
+				"s ease;-ms-animation:love " + (r_time + 5) + "s ease;animation:love " + (r_time + 5) + "s ease'></div>");
+
+			$('.heart').each(function () {
+				var top = $(this).css("top").replace(/[^-\d\.]/g, '');
+				var width = $(this).css("width").replace(/[^-\d\.]/g, '');
+				if (top <= -100 || width >= 150) {
+					$(this).detach();
+				}
+			});
+		}, 500);
+	</script>
+</body>
+
+</html>
