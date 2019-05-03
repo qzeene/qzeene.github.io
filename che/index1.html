@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Знаешь че приснилось ?</title>
+	<style>
+		* {
+			box-sizing: border-box
+		}
+
+		html,
+		body {
+			height: 100%
+		}
+
+		body {
+			font-size: 16px;
+			min-width: 320px;
+			line-height: 1.75;
+			font-family: Verdana, Geneva, Tahoma, sans-serif;
+			overflow-x: hidden;
+			color: #fff;
+			margin: 0;
+			display: flex;
+			background: #fff;
+			flex-flow: wrap column;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		body.che {
+			background: #fa758e;
+			transition: background 1s ease-out;
+		}
+
+		.out {
+			opacity: 0;
+			transition: all .7s linear;
+		}
+
+		.man {			
+			position: relative;
+		}
+
+		.man::before {
+			content: ' ';
+			position: absolute;
+			display: block;
+			width: 0px;
+			height: 0px;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			border-radius: 50%;
+			background: -moz-radial-gradient(center, ellipse cover, rgba(255, 255, 204, 1) 0%, rgba(255, 255, 255, 0) 100%);
+			background: -webkit-radial-gradient(center, ellipse cover, rgba(255, 255, 204, 1) 0%, rgba(255, 255, 255, 0) 100%);
+			background: radial-gradient(ellipse at center, rgba(255, 255, 204, 1) 0%, rgba(255, 255, 255, 0) 100%);
+		}
+
+
+		.man.animate::before {
+			width: 270px;
+			height: 270px;
+			transition: all 3s ease-in;
+			animation: light 4s infinite ease-in-out 3s;
+		}
+
+		@keyframes light {
+			0% {transform: translate(-50%, -50%) scale(1);}
+			50% {transform: translate(-50%, -50%) scale(1.2);}
+			100% {transform: translate(-50%, -50%) scale(1);}
+		}
+
+		@keyframes pulse {
+			0% {
+				transform: rotate(-45deg) scale(1);
+			}
+
+			50% {
+				transform: rotate(-45deg) scale(1.3);
+			}
+
+			100% {
+				transform: rotate(-45deg) scale(1);
+			}
+		}
+
+		button {
+			border: none;
+			outline: none;
+			background: #fbbfb8;
+			cursor: pointer;
+			color: #fff
+		}
+
+		button.action {
+			background-color: #fbbfb8;
+			display: inline-block;
+			height: 160px;
+			margin: auto;
+			position: relative;
+			top: 0;
+			transform: rotate(-45deg);
+			width: 160px;
+			animation: pulse 3s ease infinite;
+		}
+
+		button.action:active {
+			background: #fbbfbf;
+		}
+
+		button.action:before,
+		button.action:after {
+			content: '';
+			background-color: #fbbfb8;
+			border-radius: 50%;
+			height: 160px;
+			position: absolute;
+			width: 160px;
+		}
+
+		button.action:before {
+			top: -80px;
+			left: 0;
+		}
+
+		button.action:after {
+			left: 80px;
+			top: 0;
+		}
+
+		button.action span {
+			position: absolute;
+			display: block;
+			width: 80px;
+			height: 80px;
+			left: 50%;
+			z-index: 100;
+			font-size: 4em;
+		}
+
+		.msg {
+			width: 320px;
+			min-height: 100px;
+			background: #fff;
+			border-radius: 6px;
+			color: #000;
+			padding: 7px;
+			position: absolute;
+			transition: all .2s linear;
+			top: calc(50% - 60px);
+		}
+
+		.msg-e {
+			left: -100%;
+		}
+
+		.msg-l {
+			right: -100%;
+		}
+
+		.msg-e.show {
+			left: 50%;
+			transform: translate(-50%, calc(-50% + 50px));
+		}
+
+		.msg-l.show {
+			right: 50%;
+			transform: translate(50%, calc(-50% + 50px));
+		}
+
+		.msg.show {
+			transition: all .2s linear;
+		}
+
+		.msg img {
+			border-radius: 50%;
+			display: inline-block;
+			vertical-align: middle;
+		}
+
+		.msg span {
+			display: inline-block;
+			font-size: 1.1em;
+			vertical-align: middle;
+		}
+
+		.commands {
+			align-self: center;
+			justify-self: flex-end;
+			width: 100%;
+			text-align: center;
+			height: 50px;
+		}
+
+		.commands button {
+			width: 50%;
+			height: 100%;
+			font-size: 2em;
+			background: rgba(255, 255, 255, .4);
+			opacity: 1;
+			transition: all .4s linear .3s;
+		}
+
+		.commands button:disabled {
+			opacity: 0;
+			transition: all .4s linear .3s;
+		}
+
+		.commands button:first-child {
+			border-right: 1px solid #fa758e;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="man"> 
+		<img src="man.png" width="256" alt="свечусь">
+	</div>
+
+	<div class="commands">
+		<button disabled onclick="showMessage(1)">чё?</button><button disabled onclick="showMessage(0)"">чо?</button>
+	</div>
+
+	<section class=" msg msg-l">
+		<img src="https://pp.userapi.com/c845017/v845017396/157ea7/vUxGrqc2xWw.jpg" alt="Валерия">
+		<span>Валерия</span>
+		<p></p>
+	</section>
+
+	<section class="msg msg-e">
+		<img src="https://pp.userapi.com/c851236/v851236454/cb030/ZipzYc1a9yc.jpg" alt="Егор">
+		<span>Егор</span>
+		<p></p>
+	</section>
+
+	<script>
+		var man = document.getElementsByClassName("man")[0]
+		var isManHidden = false
+
+		window.onload = function () {
+			man.classList.add("animate");
+			man.onclick = hideMan;
+		};
+
+		function hideMan() {
+			if (isManHidden)
+				return;
+
+			var body = document.getElementsByTagName("body")[0]
+			var commands = document.getElementsByClassName("commands")[0]
+			body.classList.add("che")
+			man.classList.add("out")
+
+			isManHidden = true
+
+			var button = document.createElement('button')
+			button.className = "action"
+			button.innerHTML = "<span>чё?</span>"
+
+			button.onclick = function () {
+				showMessage(0);
+				button.onclick = undefined;
+				button.innerHTML = "";
+				commands.childNodes.forEach(element => {
+					element.disabled = false;
+				});
+			}
+
+			setTimeout(function () {
+				man.remove()
+				body.insertBefore(button, commands)
+			}, 1000);
+		}
+
+		function showMessage(person) {
+			var current = document.getElementsByClassName(getSelector(person))[0];
+			var other = document.getElementsByClassName(getSelector(person == 0 ? 1 : 0))[0];
+
+			if (other.classList.contains("show"))
+				other.classList.toggle("show")
+
+			var delay = 0;
+
+			if (current.classList.contains("show")) {
+				current.classList.toggle("show")
+				delay = 700
+			}
+
+			setTimeout(function () {
+				var coll = person == 0 ? l : e;
+
+				var msg = coll[randomInteger(0, coll.length - 1)];
+				current.getElementsByTagName("p")[0].textContent = msg;
+
+				current.classList.toggle("show")
+			}, delay);
+		}
+
+		function getSelector(person) {return "msg-" + (person == 0 ? "l" : "e")}
+
+		function randomInteger(min, max) {
+			var rand = min - 0.5 + Math.random() * (max - min + 1)
+			rand = Math.round(rand);
+			return rand;
+		}
+
+		var e = ["hey", "hy", "heee"];
+		var l = ["l", "e", "r", "a"];
+	</script>
+
+</body>
+
+</html>

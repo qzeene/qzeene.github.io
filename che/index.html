@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Знаешь че приснилось ?</title>
+	<style>
+		* {
+			box-sizing: border-box
+		}
+
+		html,
+		body {
+			height: 100%
+		}
+
+		body {
+			font-size: 16px;
+			min-width: 320px;
+			line-height: 1.75;
+			font-family: Verdana, Geneva, Tahoma, sans-serif;
+			overflow-x: hidden;
+			color: #fff;
+			margin: 0;
+			display: flex;
+			background: #fff;
+			flex-flow: wrap column;
+			justify-content: center;
+			align-items: center;
+		}
+
+		body.che {
+			background: #fa758e;
+			transition: background 1s ease-out;
+		}
+
+		.out {
+			opacity: 0;
+			transition: all .7s linear;
+		}
+
+		.man {			
+			position: relative;
+		}
+
+		.man::before {
+			content: ' ';
+			position: absolute;
+			display: block;
+			width: 0px;
+			height: 0px;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			border-radius: 50%;
+			background: -moz-radial-gradient(center, ellipse cover, rgba(255, 255, 204, 1) 0%, rgba(255, 255, 255, 0) 100%);
+			background: -webkit-radial-gradient(center, ellipse cover, rgba(255, 255, 204, 1) 0%, rgba(255, 255, 255, 0) 100%);
+			background: radial-gradient(ellipse at center, rgba(255, 255, 204, 1) 0%, rgba(255, 255, 255, 0) 100%);
+		}
+
+		.man.animate::before {
+			width: 270px;
+			height: 270px;
+			transition: all 3s ease-in;
+			animation: light 4s infinite ease-in-out 3s;
+		}
+
+		@keyframes light {
+			0% {transform: translate(-50%, -50%) scale(1);}
+			50% {transform: translate(-50%, -50%) scale(1.2);}
+			100% {transform: translate(-50%, -50%) scale(1);}
+		}
+
+		@keyframes pulse {
+			0% {transform: rotate(-45deg) scale(1);}
+			50% {transform: rotate(-45deg) scale(1.1);}
+			100% {transform: rotate(-45deg) scale(1);}
+		}
+
+		button {
+			border: none;
+			outline: none;
+			background: #fbbfb8;
+			cursor: pointer;
+			color: #fff
+		}
+
+		button.action {
+			background-color: #fbbfb8;
+			display: inline-block;
+			height: 160px;
+			position: relative;
+			top: 0;
+			transform: rotate(-45deg);
+			width: 160px;
+			animation: pulse 3s ease infinite;
+		}
+
+		button.action:active {
+			background: #fbbfbf;
+		}
+
+		button.action::before,
+		button.action::after {
+			content: '';
+			background-color: #fbbfb8;
+			border-radius: 50%;
+			height: 160px;
+			position: absolute;
+			width: 160px;
+		}
+
+		button.action::before {
+			top: -80px;
+			left: 0;
+		}
+
+		button.action::after {
+			left: 80px;
+			top: 0;
+		}
+
+		button.action span {
+			position: absolute;
+			display: block;
+			width: 80px;
+			height: 80px;
+			left: 50%;
+			z-index: 100;
+			font-size: 4em;
+		}
+
+		.msg {
+			width: 320px;
+			min-height: 100px;
+			background: #fff;
+			border-radius: 6px;
+			color: #000;
+			padding: 7px;
+			position: absolute;
+			transition: all .2s linear;
+			top: calc(50% - 60px);
+			left: -100%;
+		}
+
+		.msg.show {
+			left: 50%;
+			transform: translate(-50%, calc(-50% + 50px));
+			transition: all .2s linear;
+		}
+
+		.msg img {
+			border-radius: 50%;
+			display: inline-block;
+			vertical-align: middle;
+		}
+
+		.msg span {
+			display: inline-block;
+			font-size: 1.1em;
+			vertical-align: middle;
+		}
+
+		.commands {
+			align-self: center;
+			justify-self: flex-end;
+			width: 100%;
+			text-align: center;
+			height: 50px;
+			position: fixed;
+			bottom: 0;
+		}
+
+		.commands button {
+			width: 50%;
+			height: 100%;
+			font-size: 2em;
+			background: rgba(255, 255, 255, .4);
+			opacity: 1;
+			transition: all .4s linear .3s;
+		}
+
+		.commands button:disabled {
+			opacity: 0;
+			transition: all .4s linear .3s;
+		}
+
+		.commands button:first-child {
+			border-right: 1px solid #fa758e;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="man"> 
+		<img src="man.png" width="256" alt="свечусь">
+	</div>
+
+	<div class="commands">
+		<button disabled onclick="showMessage(1)">чё?</button><button disabled onclick="showMessage(0)"">чо?</button>
+	</div>
+
+	<section class=" msg msg-l">
+		<img src="https://pp.userapi.com/c845017/v845017396/157ea7/vUxGrqc2xWw.jpg" width="32" alt="Валерия">
+		<span>Валерия</span>
+		<p></p>
+	</section>
+
+	<section class="msg msg-e">
+		<img src="https://pp.userapi.com/c851236/v851236454/cb030/ZipzYc1a9yc.jpg" width="32" alt="Егор">
+		<span>Егор</span>
+		<p></p>
+	</section>
+
+	<script>
+		var man = document.getElementsByClassName("man")[0]
+
+		window.onload = function () {
+			man.classList.add("animate");
+			man.onclick = function () {
+				hideMan()
+				man.onclick = undefined
+			}
+		}
+
+		function hideMan() {	
+			var body = document.getElementsByTagName("body")[0]
+			var commands = document.getElementsByClassName("commands")[0]
+
+			body.classList.add("che")
+			man.classList.add("out")
+
+			var button = document.createElement('button')
+			button.className = "action"
+			button.innerHTML = "<span>чё?</span>"
+			button.onclick = function () {
+				showMessage(0);
+				button.onclick = undefined;
+				button.innerHTML = "";
+			
+				commands.childNodes.forEach(element => {
+					element.disabled = false;
+				});
+			}
+
+			setTimeout(function () {
+				man.remove()
+				body.insertBefore(button, commands)
+			}, 1000);
+		}
+
+		function showMessage(person) {
+			var current = document.getElementsByClassName(getSelector(person))[0];
+			var other = document.getElementsByClassName(getSelector(person == 0 ? 1 : 0))[0];
+
+			if (other.classList.contains("show"))
+				other.classList.toggle("show")
+
+			if (current.classList.contains("show")) 
+				current.classList.toggle("show")
+			
+
+			setTimeout(function () {
+				var messages = person == 0 ? l : e;
+
+				var msg = messages[randomInteger(0, messages.length - 1)];
+				current.getElementsByTagName("p")[0].textContent = msg;
+
+				current.classList.toggle("show")
+			}, 700);
+		}
+
+		function getSelector(person) {return "msg-" + (person == 0 ? "l" : "e")}
+
+		function randomInteger(min, max) {
+			var rand = min - 0.5 + Math.random() * (max - min + 1)
+			rand = Math.round(rand);
+			return rand;
+		}
+
+		var e = ['я приехал к тебе, позвал в бассейн. и не пришел. а потом оказалось что и ты не пришла, даже и не собиралась"',
+'Я приезжаю, снимаю номер, приглашаю тебя и лайкаю',
+'я переезжаю в мск, и говорю тебе "Валер, я тебя люблю любой" и мы едим сырки. Потом спустя месяц ты меня бросаешь, потому что я жирный',
+'Ты приезжаешь ко мне, а я говрю "с головой все нормально?" и на том же автобусе отправляю тебя обратно',
+'Я приезжаю к тебе, а ты по телефону говоришь "с головой все нормально?" и я на том же автобусе уезжаю обратно',
+'что я не пишу шутки про "знаешь че причнилось" и потом просыпаюсь в холодном поту и не могу уснуть',
+'я приезжаю, снимаю номер, приглашаю тебя и устраиваю там свой стендап... а ты уходишь на разогреве уже',
+'я приезжаю, снимаю номер, приглашаю тебя и показываю открытый микрофон',
+'я приехал прихожу к тебе в гости,Я ты одна дома и жаришь картошку. я говорю "может я тебя отжарю". А ты стреляешь в меня маслом и я умираю от ожогов',
+'я приехал, снял номер, позвал тебя, делаю куни и решил сфоткать вагину, потом тебе показываю фотку и ты такая "ты ебанутый вообще, нахуя ты чужую вагину мне показываешь"',
+'Я приехал позвал тебя в Додо, мы заказали еду и я такой "ну что, плати за все". И ты заплатила',
+'я приехал, снял номер, пригласил тебя, проявляю инициативу в куни а ты такая "Але Василий, ты шо себе позволяешь нахуй"',
+'я приехал, снял номер, пригласил тебя и ты такая этот текст не помещается в картинку блять',
+'мы по телефону разговаривали с видео и ты заценила меня в реале',
+'Я приехал, снял комнату, пригласил тебя и говорю "Мне с Вами скучно, мне с вами спать хочется!',
+'Я приехал, и не снял комнату. Неловко было снимать. Думал я более наглый',
+'я приехал, снял номер, пригласил тебя, я попытался тебя поцеловать (в щечку, естессна), а ты разбила мне губу. Я спрашиваю "это че, агрессия?". Ты говоришь "Да" и бьешь меня еще раз',
+'я приехал, снял номер, пригласил тебя, ты приходишь, и говоришь "нет, я девственница", а потом я смотрю на тебя, и понимаю что это я сказал. Проснулся в холодном поту',
+'Я не приехал в мск. все. это весь сон (явь)',
+'Просыпаюсь утром, а на меня тонны агрессии за то что не сдох во сне',
+'Что я просыпаюсь а у меня нет сестры, и личной жизни, и целей, и понимания зачем проснулся, и я начинаю снимать влог с карандашами',
+'приезжаю, снимаю номер, звоню тебе и такой говорю вслух "какова хуя ты не отвечаешь". Ты за три дня так и не ответила, и я уехал обратно',
+'приезжаю в мск, снимаю номер, приглашаю тебя и начинаю тебя распинать',
+'приезжаю в мск, снимаю номер, приглашаю тебя и мы любим друг друга',
+'что в ве есть хоть один стикер на слово "ок", который меня не бесит шо суку',
+'ты приезжаешь, мы на кв и ты такая: мб я борщ сварю ? А я такой: ну не переБОРЩивай',
+'приехал, ты встретила, мы на кв, оказалось, что не все так плохо, как ты думала и ты такая говоришь "а почему не стоит ?"',
+'Приезжаю, звоню тебе и говорю чё не встречаешь ?? Я приехал блятб. И ты сбрасываешь и стик этот присылаешь',
+'Я приезжаю, у нас просто мгновенно романтик, мы заходим в КВ, там все дела и вот я уже заканчиваю, а ты мне "Когда входишь?".',
+'Приехал в мск, на второй день вышел в магазин, возвращаюсь, а моя красота по КВ в трусах ходит',
+'Я приезжаю в мск, иду на митинг, меня закрывают на 15 суток и ты на свиданку в СИЗО ко мне приходишь',
+'я приезжаю в мск, мы едем к тебе домой, знакомимся с родителями, они уезжают и говорят: мы уезжаем на 5 дней, а я говорю: а можно на 7 ?',
+'Приезжаю, заселились. А там на кухне ваза с фруктами и мы решили поесть апельсины. И я тебе говор: "целую? + Целую" (разные ударения), ты говоришь :"нет, половинку". А я говорю " может ты моя половинка?". И ты такая заулыбалась(мило так как ты умеешь), подошла и поцеловала меня ',
+'Приехал в мск и блаблаблабла, в один день ты решила все же остаться и я утром открываю глаза и так легонечко поправляю на тебе одеяло, а ты в этот момент просыпаешься (такая милая, сонная, прям ми-ми-ми). Я говорю голосом этим своим но шепотом : "с добрым утром моя хорошая". А ты улыбнулась так, поцеловала меня в носик так быстренько и говоришь: какое нахуй утро, ты шо неадекватный ? 12 ночи, на улице темень вообще. Спи, дурик и не трогай меня больше',
+'Я приезжаю, все дела, мы уже остались вдвоем в КВ и решили косплей сделать и сварить спагетти. Пошли, купили, сварили, сидим едим, в итоге забыли, просто покушали и спать легли',
+];
+		var l = ['Ты приезжаешь снимаешь номер я к тебе прихожу, а ты на диване лежишь спокойно в я с картами своими заебую',
+'ничего я не спала даже',
+'Ты приехал и снял комнату. Пригласил меня, но тебе стало неловко снимать с меня одежду. Думал ты более наглый',
+'Просыпаются и начинаю убирать(уже 2 часа это делаю) а теперь жрать готовить при этом сестра никак не участвует в этом а лежит и бесит меня и периодически я на нее кричу и влог с карандашами снимает',
+'Что ты за день ни разу не доебался',
+'Я приезжаю в ту кв которую ты для меня снял. Мы болтаем смеемся. Потом ты как порядочный говоришь «ну ладно я пошёл располагайся отдыхай завтра приеду погуляем». Я обнимаю тебя и говорю «может останешься?»',
+'Мы приезжаем я говорю ща я в душ а ты говоришь «какова хуя пошла борщ готовить» и я уезжаю',
+'Приезжаешь блаблабла мы вместе и я целую тебя но больше дразню а не целую и ты чувствуешь мое дыхание я слегла касаюсь губ но не целую чтобы ты этого больше захотел, а ты скинул меня с себя и уехал домой',
+];
+	</script>
+
+</body>
+
+</html>
